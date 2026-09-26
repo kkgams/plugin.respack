@@ -1,0 +1,110 @@
+[
+  {
+    "image": 0,
+    "sprite_names": ["hero_idle", "enemy_run"],
+    "sprites": [
+      {
+        "texture": 0,
+        "uv": { "min": { "x": 0.0, "y": 0.0 }, "max": { "x": 0.5, "y": 0.5 } },
+        "pivot": { "x": 0.5, "y": 0.5 },
+        "tint": 4294967295,
+        "blend": "Alpha"
+      },
+      {
+        "texture": 0,
+        "uv": { "min": { "x": 0.5, "y": 0.0 }, "max": { "x": 1.0, "y": 0.5 } },
+        "pivot": { "x": 0.25, "y": 0.75 },
+        "tint": 4289449455,
+        "blend": "Add"
+      }
+    ]
+  },
+  [
+    { "x": 3.5, "y": -2.0 },
+    { "x": 10.25, "y": 8.75 }
+  ],
+  {
+    "name": "test_level",
+    "platform": "Linux",
+    "spawns": [
+      {
+        "id": 1,
+        "name": "hero",
+        "transform": {
+          "pos": { "x": 12.0, "y": 24.0 },
+          "rot": 0.0,
+          "scale": { "x": 1.0, "y": 1.0 },
+          "z_sort": 64,
+          "enabled": true
+        },
+        "sprite": {
+          "texture": 0,
+          "uv": { "min": { "x": 0.0, "y": 0.0 }, "max": { "x": 0.5, "y": 0.5 } },
+          "pivot": { "x": 0.5, "y": 0.5 },
+          "tint": 4294967295,
+          "blend": "Alpha"
+        },
+        "physics": {
+          "mass": 1.5,
+          "restitution": 0.25,
+          "friction": 0.8,
+          "shape": { "CapsuleCollider": { "radius": 0.3, "height": 1.4 } },
+          "vel_x": 128,
+          "vel_y": -64
+        }
+      },
+      {
+        "id": 2,
+        "name": "crate",
+        "transform": {
+          "pos": { "x": -4.0, "y": 2.0 },
+          "rot": 0.0,
+          "scale": { "x": 2.0, "y": 2.0 },
+          "z_sort": 0,
+          "enabled": true
+        },
+        "sprite": {
+          "texture": 0,
+          "uv": { "min": { "x": 0.5, "y": 0.0 }, "max": { "x": 1.0, "y": 0.5 } },
+          "pivot": { "x": 0.5, "y": 0.5 },
+          "tint": 4294967295,
+          "blend": "Opaque"
+        },
+        "physics": {
+          "mass": 4.0,
+          "restitution": 0.0,
+          "friction": 0.9,
+          "shape": { "AABBCollider": { "half_extents": { "x": 0.5, "y": 0.5 } } },
+          "vel_x": 0,
+          "vel_y": 0
+        }
+      }
+    ]
+  },
+  {
+    "name": "hero_idle",
+    "loop": true,
+    "frames": [
+      {
+        "sprite": {
+          "texture": 0,
+          "uv": { "min": { "x": 0.0, "y": 0.0 }, "max": { "x": 0.5, "y": 0.5 } },
+          "pivot": { "x": 0.5, "y": 0.5 },
+          "tint": 4294967295,
+          "blend": "Alpha"
+        },
+        "duration": 100
+      },
+      {
+        "sprite": {
+          "texture": 0,
+          "uv": { "min": { "x": 0.5, "y": 0.0 }, "max": { "x": 1.0, "y": 0.5 } },
+          "pivot": { "x": 0.5, "y": 0.5 },
+          "tint": 4294967295,
+          "blend": "Alpha"
+        },
+        "duration": 120
+      }
+    ]
+  }
+]

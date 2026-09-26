@@ -1,0 +1,322 @@
+{
+  "package": "game",
+  "types": {
+    "EntityId": "u32",
+    "ColorRGBA8": "u32",
+    "I26_6": "i32",
+    "U26_6": "u32",
+    "I52_12": "i64",
+    "U52_12": "u64",
+    "BlendMode": {
+      "type": "enum",
+      "value": [
+        "Opaque",
+        "Alpha",
+        "Add",
+        "Multiply"
+      ]
+    },
+    "Platform": {
+      "type": "enum",
+      "value": {
+        "Windows": 1,
+        "Linux": 2,
+        "Mac": 3,
+        "Switch": 10,
+        "PS": 11,
+        "Xbox": 12
+      }
+    },
+    "Vec2": {
+      "type": "struct",
+      "fields": {
+        "x": "f32",
+        "y": "f32"
+      }
+    },
+    "Vec2i": {
+      "type": "struct",
+      "fields": {
+        "x": "i32",
+        "y": "i32"
+      }
+    },
+    "RectF": {
+      "type": "struct",
+      "fields": {
+        "min": "Vec2",
+        "max": "Vec2"
+      }
+    },
+    "Transform2D": {
+      "type": "struct",
+      "fields": {
+        "pos": {
+          "type": "Vec2",
+          "default": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "rot": {
+          "type": "f32",
+          "default": 0.0
+        },
+        "scale": {
+          "type": "Vec2",
+          "default": {
+            "x": 1.0,
+            "y": 1.0
+          }
+        },
+        "z_sort": {
+          "type": "I26_6",
+          "default": 0
+        },
+        "enabled": {
+          "type": "bool",
+          "default": true
+        }
+      }
+    },
+    "Mat4": {
+      "type": "array",
+      "len": 16,
+      "value": "f32"
+    },
+    "Vec2Array": {
+      "type": "vector",
+      "value": "Vec2"
+    },
+    "NameList": {
+      "type": "vector",
+      "value": "string"
+    },
+    "LocalizedText": {
+      "type": "struct",
+      "fields": {
+        "key": {
+          "type": "string",
+          "max_len": 96
+        },
+        "output": {
+          "type": "string",
+          "max_len": 512,
+          "default": ""
+        }
+      }
+    },
+    "Blob": {
+      "type": "bytes",
+      "max_len": 1048576
+    },
+    "TextureRef": "u8",
+    "Sprite": {
+      "type": "struct",
+      "fields": {
+        "texture": "TextureRef",
+        "uv": "RectF",
+        "pivot": {
+          "type": "Vec2",
+          "default": {
+            "x": 0.5,
+            "y": 0.5
+          }
+        },
+        "tint": {
+          "type": "ColorRGBA8",
+          "default": 4294967295
+        },
+        "blend": {
+          "type": "BlendMode",
+          "default": "Alpha"
+        }
+      }
+    },
+    "CircleCollider": {
+      "type": "struct",
+      "fields": {
+        "radius": {
+          "type": "f32",
+          "min": 0.0,
+          "default": 1.0
+        }
+      }
+    },
+    "AABBCollider": {
+      "type": "struct",
+      "fields": {
+        "half_extents": {
+          "type": "Vec2",
+          "default": {
+            "x": 0.5,
+            "y": 0.5
+          }
+        }
+      }
+    },
+    "CapsuleCollider": {
+      "type": "struct",
+      "fields": {
+        "radius": {
+          "type": "f32",
+          "min": 0.0,
+          "default": 0.25
+        },
+        "height": {
+          "type": "f32",
+          "min": 0.0,
+          "default": 1.0
+        }
+      }
+    },
+    "ColliderShape": {
+      "type": "oneof",
+      "value": [
+        "CircleCollider",
+        "AABBCollider",
+        "CapsuleCollider"
+      ]
+    },
+    "PhysicsBody2D": {
+      "type": "struct",
+      "fields": {
+        "mass": {
+          "type": "f32",
+          "min": 0.0,
+          "default": 1.0
+        },
+        "restitution": {
+          "type": "f32",
+          "min": 0.0,
+          "max": 1.0,
+          "default": 0.0
+        },
+        "friction": {
+          "type": "f32",
+          "min": 0.0,
+          "default": 0.8
+        },
+        "shape": "ColliderShape",
+        "vel_x": {
+          "type": "I26_6",
+          "default": 0
+        },
+        "vel_y": {
+          "type": "I26_6",
+          "default": 0
+        }
+      }
+    },
+    "AnimationFrame": {
+      "type": "struct",
+      "fields": {
+        "sprite": "Sprite",
+        "duration": {
+          "type": "u16",
+          "min": 1,
+          "default": 100
+        }
+      }
+    },
+    "Animation": {
+      "type": "struct",
+      "fields": {
+        "name": {
+          "type": "string",
+          "max_len": 64
+        },
+        "loop": {
+          "type": "bool",
+          "default": true
+        },
+        "frames": {
+          "type": "vector",
+          "value": "AnimationFrame"
+        }
+      }
+    },
+    "Atlas": {
+      "type": "struct",
+      "fields": {
+        "image": "TextureRef",
+        "sprite_names": {
+          "type": "vector",
+          "value": "string"
+        },
+        "sprites": {
+          "type": "vector",
+          "value": "Sprite"
+        }
+      }
+    },
+    "EntitySpawn": {
+      "type": "struct",
+      "fields": {
+        "id": {
+          "type": "EntityId",
+          "default": 0
+        },
+        "name": {
+          "type": "string",
+          "default": ""
+        },
+        "transform": "Transform2D",
+        "sprite": {
+          "type": "Sprite",
+          "default": {
+            "texture": "",
+            "uv": {
+              "min": {
+                "x": 0,
+                "y": 0
+              },
+              "max": {
+                "x": 1,
+                "y": 1
+              }
+            }
+          }
+        },
+        "physics": {
+          "type": "PhysicsBody2D",
+          "default": {
+            "mass": 1,
+            "restitution": 0,
+            "friction": 0.8,
+            "shape": {
+              "circle": {
+                "radius": 1.0
+              }
+            },
+            "vel_x": 0,
+            "vel_y": 0
+          }
+        }
+      }
+    },
+    "Level": {
+      "type": "struct",
+      "fields": {
+        "name": {
+          "type": "string",
+          "max_len": 64
+        },
+        "platform": {
+          "type": "Platform",
+          "default": "Windows"
+        },
+        "spawns": {
+          "type": "vector",
+          "value": "EntitySpawn"
+        }
+      }
+    }
+  },
+  "data": [
+    "Atlas",
+    "Vec2Array",
+    "Level",
+    "Animation"
+  ]
+}

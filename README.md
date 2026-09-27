@@ -14,5 +14,5 @@ The test checks Odin generation, invalid-schema diagnostics, and the binary RSPK
 header/content using the checked-in fixture. Output is `dist/plugin.respack.wasm`.
 The flake pins the same Odin revision as the standalone `plugin.director-compiler`.
 
-No release/publish automation is included. The Odin jsmn port's provenance and
+A fail-closed release pipeline scaffold is included; see `PUBLISHING.md`. No licensing texts have been approved or included. The Odin jsmn port's provenance and
 license are an explicit inventory blocker; see `LICENSING.md` and `PREPARATION.md`.

@@ -14,5 +14,7 @@ The test checks Odin generation, invalid-schema diagnostics, and the binary RSPK
 header/content using the checked-in fixture. Output is `dist/plugin.respack.wasm`.
 The flake pins the same Odin revision as the standalone `plugin.director-compiler`.
 
-A fail-closed release pipeline scaffold is included; see `PUBLISHING.md`. No licensing texts have been approved or included. The Odin jsmn port's provenance and
-license are an explicit inventory blocker; see `LICENSING.md` and `PREPARATION.md`.
+The owner approved Apache-2.0 for GAMS-authored code. The proposed third-party
+`NOTICE` and Odin jsmn port provenance still require owner review before any public
+source distribution. See `LICENSING.md`, `THIRD-PARTY-REVIEW.md`, and
+`PUBLISHING.md` for the fail-closed candidate/release process.

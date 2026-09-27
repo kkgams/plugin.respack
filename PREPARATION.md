@@ -19,8 +19,8 @@ carry an independently established validation record for its current bytes.
 
 ## Release blockers
 
-- Repository-owner license approval remains unresolved; see `LICENSING.md`.
-- Third-party provenance, notices, source obligations, and artifact inventory need approval.
+- Apache-2.0 was approved for GAMS-authored code; third-party provenance, notices,
+  source obligations, and the linked artifact inventory still need owner review.
 - Independent Linux CI evidence has not yet been recorded.
 - `prepare()` initializes no Git repository and performs no network publication.
 - A release scaffold exists, but must not be pushed to a public repository or tagged until licensing and distribution gates are reviewed.

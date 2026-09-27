@@ -926,9 +926,10 @@ jsmn parser attribution for the local Odin port (MIT)
 Source: local src/jsmn/jsmn.odin; original jsmn C notice: https://github.com/zserge/jsmn/blob/master/jsmn.h
 ==============================================================================
 
-The local Odin jsmn port was introduced in the project source history without an
-origin statement. The following original jsmn license is retained conservatively
-pending owner confirmation of the port provenance; see THIRD-PARTY-REVIEW.md.
+The owner identified the local Odin parser as a port of upstream jsmn.
+The original jsmn MIT copyright and terms are retained for that source;
+GAMS-authored Odin adaptation changes are covered by the separate LICENSE.
+See THIRD-PARTY-REVIEW.md for the linked-code inventory.
 
 /*
  * MIT License

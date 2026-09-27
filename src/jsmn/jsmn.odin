@@ -1,3 +1,10 @@
+/*
+ * Odin port of jsmn (https://github.com/zserge/jsmn).
+ * Original jsmn: Copyright (c) 2010 Serge Zaitsev, MIT.
+ * Original MIT terms: root NOTICE.
+ * GAMS-authored Odin port changes: Apache-2.0, root LICENSE.
+ */
+
 package jsmn
 
 JsmnType :: enum int {

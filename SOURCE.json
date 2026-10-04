@@ -1,9 +1,4 @@
 {
-  "source_repository": "https://github.com/justgook/gamectl",
-  "source_base_revision": "01bbfb1cb07bca898b86e7127cf433d2d23aaf7e",
-  "snapshot_kind": "working-tree source snapshot; no history rewritten",
-  "source_worktree_status": [],
-  "repository": "plugin.respack",
   "files_sha256": {
     ".github/workflows/verify.yml": "391a2b65dd89044159fbe526629b03a04b04326b7e399058ce8dce1720dcbacc",
     ".gitignore": "12be7d69664589a1ea44ea4f46b2ea1924d33dac8c474a4f7d2778a8ee9201ea",
@@ -31,5 +26,190 @@
     "src/wit/deps/wasi-io-0.2.0/package.wit": "0570025e5d4649cc6f4726554c585857cf48fc6df4bf28a7605f4e6f7c82f77a",
     "src/wit/package.wit": "3d33a6864ec963cadbf9b37391782f62fcee01def06765d710e916b96c892ae9",
     "test/e2e.mjs": "dc6ec86087abe4fc123f9ea214b0fde3e90116dd5a83a9993d2920849f47c9b9"
-  }
+  },
+  "maintenance": {
+    "baseline_commit": "ed92aa529818359a4f5d87cfe22aa9ae04e8dc18",
+    "blockers": [
+      "publication migration required: older direct GitHub Release creation lacks strict immutable-policy/draft/public verification",
+      "owner candidate/digest authorization and final locked builds/runtime/hosted linked-evidence review pending",
+      "historical SOURCE sparse coverage/drift requires provenance review; no complete legal certification",
+      "historical src/jsmn/jsmn.odin drift requires explicit source/terms review; not approved by metadata preparation"
+    ],
+    "changed_inputs": {
+      "PUBLISHING.md": {
+        "after": "b00c3edfffe54444fb9d1c05aea5492278755b75b7149910f69e6da885cc98cf",
+        "before": "d9a949390aec7897c08ed6eb39f585c21682814152c59bc9a7055d092877bd7b",
+        "rule": "insert prospective instructions after any frontmatter; entire historical text/URLs retained"
+      },
+      "README.md": {
+        "after": "cbc77feed61a091a8032632753f0be30b67b33003cc3b9db07a2942d6b43dd52",
+        "before": "7d57dc388b2e42975e783f8e7ec2135ded8ee9fd481e3e6ff6c626feccf9af5d",
+        "rule": "insert prospective instructions after any frontmatter; entire historical text/URLs retained"
+      },
+      "flake.nix": {
+        "after": "fd041404374354601767cdfac456d62d3b44f370f3835ac73a5f096c5c9b6164",
+        "before": "2f30dd8606c1c1214471ee35639501f10f179b441a82acef030f84e8cba83a0a",
+        "rule": "own component description only; all toolchain pins preserved"
+      },
+      "version.txt": {
+        "after": "1f930dd1f133c1f97a94fe3acb8db34372cf4c01ffdb2b3ff4ca72f9494121e9",
+        "before": "e9dd8507f4bf0c6f42458e41aea833ad0bd3f6127272335eee9bf4d58541ed67",
+        "rule": "canonical distribution version; not WIT or runtime harness"
+      }
+    },
+    "existing_license_authority": "requires clarification where contribution/authority bounds are unclear; no existing payload relicensed",
+    "historical_drift": {
+      ".github/workflows/verify.yml": {
+        "baseline": "8df5b1f82badfcd1ab379f8bb708f0cb9c5f61f203146a04e8e067705ec08162",
+        "historical": "391a2b65dd89044159fbe526629b03a04b04326b7e399058ce8dce1720dcbacc"
+      },
+      ".gitignore": {
+        "baseline": "ae244871ccec4fa8d915b4ee432d71e85e108d3c3bc299e583308ead562cf200",
+        "historical": "12be7d69664589a1ea44ea4f46b2ea1924d33dac8c474a4f7d2778a8ee9201ea"
+      },
+      "LICENSING.md": {
+        "baseline": "0d29b5c1f5f96b79acb215442e7339bdd36cbdc049d720af1045ff8cabb655fa",
+        "historical": "d4b79d8b9ed3c42813d51368fef1ce1f441948b217977ab839e10b23b0262318"
+      },
+      "Makefile": {
+        "baseline": "7c4d8fd0cf0583639a1cb762e9b597f82b3ddd130619b65953b8dcc3de7f6a2f",
+        "historical": "28a29e84465a5b6b812e1e7f31169d018b395b3365604fb5cb18072616a9e0e7"
+      },
+      "PREPARATION.md": {
+        "baseline": "6e6623f52edfa7fb0fbaabd320cceb7c70f4ce54137246c47e2635a9449584d0",
+        "historical": "df4846f8207785cc4fce78aa32131f40358840e8125f41e8af56dba6c51ee55e"
+      },
+      "README.md": {
+        "baseline": "7d57dc388b2e42975e783f8e7ec2135ded8ee9fd481e3e6ff6c626feccf9af5d",
+        "historical": "93bdc6e18b7887c42ebf72d8b2cdf44a80822aa4dc7fed0aab02272ccfe2bd59"
+      },
+      "flake.lock": {
+        "baseline": "f4eeef56deb209afbca6947807cf700129c325ac9f6eb014ae44b0981b9238e2",
+        "historical": "3adbe3447e662145dd50a383489f62e7bfbe16996281e113b1fbac347eca3eae"
+      },
+      "flake.nix": {
+        "baseline": "2f30dd8606c1c1214471ee35639501f10f179b441a82acef030f84e8cba83a0a",
+        "historical": "e328a1bede7724d259433fa00dca985af8ad01e5a6be27e716b87f0d61467173"
+      },
+      "src/jsmn/jsmn.odin": {
+        "baseline": "9ef5d08d67972b7eb781c4ee42f71bb4ab09d0fa3484caf251240bdae7d2126f",
+        "historical": "c5d2a1d925d4c0039f95ee5db6da6bd4b834a18844119b6325df24211e360356"
+      }
+    },
+    "inventory": {
+      "baseline_files_sha256": {
+        ".github/workflows/release.yml": "6a54548943c105e75dfa01314f923fe49d9825b91d880c138ce10b6d728729dc",
+        ".github/workflows/verify.yml": "8df5b1f82badfcd1ab379f8bb708f0cb9c5f61f203146a04e8e067705ec08162",
+        ".gitignore": "ae244871ccec4fa8d915b4ee432d71e85e108d3c3bc299e583308ead562cf200",
+        "CONTEXT.md": "69ddad586979d7796d18a42c304bd2d79281200eda6ec883bfca23c634785214",
+        "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+        "LICENSING.md": "0d29b5c1f5f96b79acb215442e7339bdd36cbdc049d720af1045ff8cabb655fa",
+        "Makefile": "7c4d8fd0cf0583639a1cb762e9b597f82b3ddd130619b65953b8dcc3de7f6a2f",
+        "NOTICE": "b22d023fd1ebf250f722927c73284f6b8a2e0a56e97139f65e6baa3f281df08a",
+        "PREPARATION.md": "6e6623f52edfa7fb0fbaabd320cceb7c70f4ce54137246c47e2635a9449584d0",
+        "PUBLISHING.md": "d9a949390aec7897c08ed6eb39f585c21682814152c59bc9a7055d092877bd7b",
+        "README.md": "7d57dc388b2e42975e783f8e7ec2135ded8ee9fd481e3e6ff6c626feccf9af5d",
+        "THIRD-PARTY-REVIEW.md": "1be5b054944a7095533cb3adfdbd460324a5cc691e92c40486a723e326f3007d",
+        "config.mk": "328224f93283d621be04623102fd19670c5a1c1c00577c02718d8ac8f423336b",
+        "flake.lock": "f4eeef56deb209afbca6947807cf700129c325ac9f6eb014ae44b0981b9238e2",
+        "flake.nix": "2f30dd8606c1c1214471ee35639501f10f179b441a82acef030f84e8cba83a0a",
+        "package-lock.json": "1b13080f6f4f0e0e20aa7eac5d214eca6021ac1293e0ace6dddff704554ce8a9",
+        "package.json": "b3cc9e8fc1a1ff9c3206c86b1b9b14cfbc6deb45e4b30a11c2db0d06a1071d9b",
+        "scripts/check-licensing-digests.sh": "0dfa34f834af2e065e8cbf325cc8eaf2beaf6dc60093f802466799c48d59ff21",
+        "scripts/check-release-absent.sh": "12e2d220d48ac7d9ddb9f7797897648e4f77af0e589f3bd302b73feca519d90c",
+        "scripts/check-release-metadata.sh": "001ce81cde6f1c54e3f46e29a5f36f9a22fca16c3c241a2148674ab3d6a19812",
+        "scripts/record-build-evidence.sh": "1441bb5c52306ac19ad662f59abdd5cabd0f68f86090be7fad992508e1a12103",
+        "scripts/release-oci-preflight.sh": "38f265a1d111a8ca3bbd1db93fdd9c956d4b6a5dea9c88cd3f7be1a68b120d1f",
+        "scripts/stage-candidate.sh": "c06a158d6bdf9573bc9bd559afda34545de7ecae8e3de65a39eae4e5a7b16ab0",
+        "scripts/test-release-absent.sh": "0c2b4e501365cc495e1ee45d53e94c7cd288d5b2dfb9986db39f79ba7c09f29a",
+        "scripts/test-release-oci-preflight.sh": "9039887cd64776aa558a3005693956140a91234471cf87bfb96f12306dd21b4a",
+        "scripts/wasm-notices.py": "91d94800f753ae948e9289393da9b6b63f6dc24e154a41fbdae2fd59f9305d85",
+        "src/codegen.odin": "84ad2dc1bcaca1f2c39232fce3d7a93fbfffa2fe55eb535e723d37acf963f97b",
+        "src/component.c": "4624e7bb57e09e2d546c8d42d7a2ddbb484f35d63e306070d85c4d781ba2fd61",
+        "src/core.odin": "b4f2c90e1301e5b7889feaa90448e3e243cd9d08a66706acb62db9b4c1d5dc67",
+        "src/encode.odin": "d96755ab1609df1c6e9bfd0752a99ea98221614c09b4859db333d3eb5eefbaf5",
+        "src/example.respack.json": "8589ec20fcf33e56ae5f9811e6fe0eff1d5658e28855129fafc25a16292f86d4",
+        "src/jsmn/jsmn.odin": "9ef5d08d67972b7eb781c4ee42f71bb4ab09d0fa3484caf251240bdae7d2126f",
+        "src/plugin.mk": "c9b7e71b5beffbd7751e12baf301ee7ce77beb5a73ef56e94cdf782dfbe4ab36",
+        "src/schema.odin": "a5b0efbe81ee1a385b898fa64328ed312a7d1836d5c288a5efd057896752d1d6",
+        "src/testdata/example.slots.json": "98bae67c1adc6272ac42e06487fa98f6820c5f9c30d6444a426abfa817702c4d",
+        "src/wit/deps/wasi-clocks-0.2.0/package.wit": "d4d98af006f1cce3bc8b447975be2c87064b80ba3d87db68a2f46a24e01d7400",
+        "src/wit/deps/wasi-filesystem-0.2.0/package.wit": "fdba56d19f54ceaaf67ea20ad2a6c875539f78066174d01e643153fe16c74d6d",
+        "src/wit/deps/wasi-io-0.2.0/package.wit": "0570025e5d4649cc6f4726554c585857cf48fc6df4bf28a7605f4e6f7c82f77a",
+        "src/wit/package.wit": "3d33a6864ec963cadbf9b37391782f62fcee01def06765d710e916b96c892ae9",
+        "test/e2e.mjs": "dc6ec86087abe4fc123f9ea214b0fde3e90116dd5a83a9993d2920849f47c9b9",
+        "test/test_wasm_notices.py": "511a086b2e676e58272035276d285df8e77587905d6f2a739547294147d7c783",
+        "version.txt": "e9dd8507f4bf0c6f42458e41aea833ad0bd3f6127272335eee9bf4d58541ed67"
+      },
+      "exclusions": {
+        ".git": "Git administrative data",
+        "SOURCE.json": "independent self-binding record"
+      },
+      "files_sha256": {
+        ".github/workflows/release.yml": "6a54548943c105e75dfa01314f923fe49d9825b91d880c138ce10b6d728729dc",
+        ".github/workflows/verify.yml": "8df5b1f82badfcd1ab379f8bb708f0cb9c5f61f203146a04e8e067705ec08162",
+        ".gitignore": "ae244871ccec4fa8d915b4ee432d71e85e108d3c3bc299e583308ead562cf200",
+        "CONTEXT.md": "69ddad586979d7796d18a42c304bd2d79281200eda6ec883bfca23c634785214",
+        "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+        "LICENSING.md": "0d29b5c1f5f96b79acb215442e7339bdd36cbdc049d720af1045ff8cabb655fa",
+        "Makefile": "7c4d8fd0cf0583639a1cb762e9b597f82b3ddd130619b65953b8dcc3de7f6a2f",
+        "NOTICE": "b22d023fd1ebf250f722927c73284f6b8a2e0a56e97139f65e6baa3f281df08a",
+        "PREPARATION.md": "6e6623f52edfa7fb0fbaabd320cceb7c70f4ce54137246c47e2635a9449584d0",
+        "PUBLISHING.md": "b00c3edfffe54444fb9d1c05aea5492278755b75b7149910f69e6da885cc98cf",
+        "README.md": "cbc77feed61a091a8032632753f0be30b67b33003cc3b9db07a2942d6b43dd52",
+        "THIRD-PARTY-REVIEW.md": "1be5b054944a7095533cb3adfdbd460324a5cc691e92c40486a723e326f3007d",
+        "config.mk": "328224f93283d621be04623102fd19670c5a1c1c00577c02718d8ac8f423336b",
+        "flake.lock": "f4eeef56deb209afbca6947807cf700129c325ac9f6eb014ae44b0981b9238e2",
+        "flake.nix": "fd041404374354601767cdfac456d62d3b44f370f3835ac73a5f096c5c9b6164",
+        "package-lock.json": "1b13080f6f4f0e0e20aa7eac5d214eca6021ac1293e0ace6dddff704554ce8a9",
+        "package.json": "b3cc9e8fc1a1ff9c3206c86b1b9b14cfbc6deb45e4b30a11c2db0d06a1071d9b",
+        "scripts/check-licensing-digests.sh": "0dfa34f834af2e065e8cbf325cc8eaf2beaf6dc60093f802466799c48d59ff21",
+        "scripts/check-release-absent.sh": "12e2d220d48ac7d9ddb9f7797897648e4f77af0e589f3bd302b73feca519d90c",
+        "scripts/check-release-metadata.sh": "001ce81cde6f1c54e3f46e29a5f36f9a22fca16c3c241a2148674ab3d6a19812",
+        "scripts/record-build-evidence.sh": "1441bb5c52306ac19ad662f59abdd5cabd0f68f86090be7fad992508e1a12103",
+        "scripts/release-oci-preflight.sh": "38f265a1d111a8ca3bbd1db93fdd9c956d4b6a5dea9c88cd3f7be1a68b120d1f",
+        "scripts/stage-candidate.sh": "c06a158d6bdf9573bc9bd559afda34545de7ecae8e3de65a39eae4e5a7b16ab0",
+        "scripts/test-release-absent.sh": "0c2b4e501365cc495e1ee45d53e94c7cd288d5b2dfb9986db39f79ba7c09f29a",
+        "scripts/test-release-oci-preflight.sh": "9039887cd64776aa558a3005693956140a91234471cf87bfb96f12306dd21b4a",
+        "scripts/wasm-notices.py": "91d94800f753ae948e9289393da9b6b63f6dc24e154a41fbdae2fd59f9305d85",
+        "src/codegen.odin": "84ad2dc1bcaca1f2c39232fce3d7a93fbfffa2fe55eb535e723d37acf963f97b",
+        "src/component.c": "4624e7bb57e09e2d546c8d42d7a2ddbb484f35d63e306070d85c4d781ba2fd61",
+        "src/core.odin": "b4f2c90e1301e5b7889feaa90448e3e243cd9d08a66706acb62db9b4c1d5dc67",
+        "src/encode.odin": "d96755ab1609df1c6e9bfd0752a99ea98221614c09b4859db333d3eb5eefbaf5",
+        "src/example.respack.json": "8589ec20fcf33e56ae5f9811e6fe0eff1d5658e28855129fafc25a16292f86d4",
+        "src/jsmn/jsmn.odin": "9ef5d08d67972b7eb781c4ee42f71bb4ab09d0fa3484caf251240bdae7d2126f",
+        "src/plugin.mk": "c9b7e71b5beffbd7751e12baf301ee7ce77beb5a73ef56e94cdf782dfbe4ab36",
+        "src/schema.odin": "a5b0efbe81ee1a385b898fa64328ed312a7d1836d5c288a5efd057896752d1d6",
+        "src/testdata/example.slots.json": "98bae67c1adc6272ac42e06487fa98f6820c5f9c30d6444a426abfa817702c4d",
+        "src/wit/deps/wasi-clocks-0.2.0/package.wit": "d4d98af006f1cce3bc8b447975be2c87064b80ba3d87db68a2f46a24e01d7400",
+        "src/wit/deps/wasi-filesystem-0.2.0/package.wit": "fdba56d19f54ceaaf67ea20ad2a6c875539f78066174d01e643153fe16c74d6d",
+        "src/wit/deps/wasi-io-0.2.0/package.wit": "0570025e5d4649cc6f4726554c585857cf48fc6df4bf28a7605f4e6f7c82f77a",
+        "src/wit/package.wit": "3d33a6864ec963cadbf9b37391782f62fcee01def06765d710e916b96c892ae9",
+        "test/e2e.mjs": "dc6ec86087abe4fc123f9ea214b0fde3e90116dd5a83a9993d2920849f47c9b9",
+        "test/test_wasm_notices.py": "511a086b2e676e58272035276d285df8e77587905d6f2a739547294147d7c783",
+        "version.txt": "1f930dd1f133c1f97a94fe3acb8db34372cf4c01ffdb2b3ff4ca72f9494121e9"
+      },
+      "scope": "complete prepared source-only clone, not legal or linked-output certification"
+    },
+    "native_evidence": {
+      "binding": "Pinned native inventories do not bind distribution version fields; flake toolchain pins and all linked/source/runtime bytes unchanged.",
+      "reviewed_files_sha256": {
+        "NOTICE": "b22d023fd1ebf250f722927c73284f6b8a2e0a56e97139f65e6baa3f281df08a",
+        "THIRD-PARTY-REVIEW.md": "1be5b054944a7095533cb3adfdbd460324a5cc691e92c40486a723e326f3007d"
+      },
+      "status": "historical native evidence preserved; final candidate relink/hosted review pending"
+    },
+    "new_recipe_license": "Apache-2.0",
+    "previous_source_sha256": "be3ec61509f5aac9d9d4ff82a553133045794e0ee7cb943cc63af79890278cbf",
+    "recipe": "packaging/ecosystem/coordinated_release/legacy_components.py:prepare",
+    "recipe_sha256": "7ca563813385652f1ba1a44069eb5d469e8804b8ea7b45295c5b4a2e69e4d5ce",
+    "release_ready": false,
+    "schema": 1,
+    "version": "0.2.0"
+  },
+  "repository": "plugin.respack",
+  "snapshot_kind": "working-tree source snapshot; no history rewritten",
+  "source_base_revision": "01bbfb1cb07bca898b86e7127cf433d2d23aaf7e",
+  "source_repository": "https://github.com/justgook/gamectl",
+  "source_worktree_status": []
 }

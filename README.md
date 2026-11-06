@@ -1,25 +1,25 @@
-## Current 0.2.1 release authorization
+## Current tag-based release authorization
 
-The owner's current instruction is: "no need for review of checksums / licenses - those area already prepared - drop pending reviews, commit changes, prepare tags - create script (using gh) to push to repos and create releases."
+Pushing the matching version tag authorizes release in this repository. No manual
+checksum variables, approval boolean, hosted-review approval, or `release`-branch
+HEAD match is required. Branch candidates still validate their payloads; they do
+not publish a GitHub Release or OCI version. Manual branch runs verify only.
 
-This supersedes earlier pending human checksum/license and hosted-review approvals
-for the prepared 0.2.1 release. Documentation commits and annotated **local**
-`v0.2.1` tags at the tested HEAD are authorized. No repeated human review is
-pending for these unchanged prepared bytes. Prior "before any tag" restrictions,
-including publisher migration, do not restrict local tagging.
+Repository/tag/version and WIT identity checks, build/runtime tests, source and
+build-evidence checks, nonempty LICENSE/NOTICE, exact embedded licensing bytes,
+generated SHA256SUMS, independent candidates, and GitHub Release/OCI no-overwrite
+checks remain required. The workflow uses the automatic GitHub token. Never move
+or overwrite an existing version tag. Pages publication remains independent.
 
-This is not evidence of hosted Linux CI, GUI/Host consumption, registry visibility,
-immutable policy, draft-first rehearsal or anonymous public-byte verification.
-Those coverage gaps remain accurately unverified; publication technical checks
-still apply. Version, source closure, evidence, exact license/notice digest and
-candidate-byte gates remain strict. No source or legal evidence is refreshed.
-No remote push/publication, repository variable or remote configuration change
-is performed by this local preparation. Never move or overwrite an existing tag.
+This policy supersedes historical approval-variable and pre-tag review/branch
+requirements below, not source provenance or legal terms. It does not claim hosted
+validation or authorize this editing session to commit, push, tag, or publish.
+No source snapshots, legal texts, or historical evidence are refreshed.
 
 > Prepared target: `plugin.respack` v0.2.1; not yet published.
 > The documentation below is a frozen historical record, not current
-> pending approval requirements. Its human review/local-tag restrictions are
-> superseded above; technical publication safeguards are not waived.
+> pending approval requirements. Its manual approval/checksum and pre-tag
+> review/branch requirements are superseded above; content checks remain.
 
 # plugin.respack
 
@@ -41,3 +41,15 @@ The owner approved Apache-2.0 for GAMS-authored code and reviewed the third-part
 `NOTICE`. The extracted Odin jsmn port now identifies its upstream MIT origin;
 hosted Linux adapter/candidate evidence is still required before tagging. See `LICENSING.md`, `THIRD-PARTY-REVIEW.md`, and
 `PUBLISHING.md` for the fail-closed candidate/release process.
+
+## Local Project and documentation
+
+Run `nix develop --command make open` on macOS Apple Silicon to build local
+artifacts and open this repository's `gams.json` with the downloaded released
+Host. No sibling checkout is required; `tools/` and `gams_modules/` are ignored.
+The existing Host is retained, with release notices kept alongside it.
+
+Use `make serve-docs` (`DOCS_PORT` overrides 8080), `make validate-docs` and
+`make docs` for the pinned wiki. The site is built into `build/site/`; pushes to
+`release` publish it through GitHub Pages, independently of version tags.
+See [development documentation](docs/index.md) for Project behavior and checks.

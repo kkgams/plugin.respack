@@ -1,55 +1,28 @@
-## Current tag-based release authorization
+# GAMS Resource Pack
 
-Pushing the matching version tag authorizes release in this repository. No manual
-checksum variables, approval boolean, hosted-review approval, or `release`-branch
-HEAD match is required. Branch candidates still validate their payloads; they do
-not publish a GitHub Release or OCI version. Manual branch runs verify only.
+The resource pack component is a [GAMS](https://github.com/kkgams/gams) WASM Project Unit exporting `gams:respack/respack@1.0.0`. Caller-owned JSON schemas and slot payloads produce Odin decoder source or binary RSPK data. Only `build-to-file` accesses Host-preopened files; ordinary generation/build calls return data. Resource packing is independent of Director compilation.
 
-Repository/tag/version and WIT identity checks, build/runtime tests, source and
-build-evidence checks, nonempty LICENSE/NOTICE, exact embedded licensing bytes,
-generated SHA256SUMS, independent candidates, and GitHub Release/OCI no-overwrite
-checks remain required. The workflow uses the automatic GitHub token. Never move
-or overwrite an existing version tag. Pages publication remains independent.
+| Unit | Source / output | License | Original work |
+| --- | --- | --- | --- |
+| Resource pack compiler | `src/*.odin`, `src/component.c`, `src/wit/`; `build.nosync/plugin.respack.wasm` | [Apache-2.0](LICENSE), jsmn MIT and full [third-party terms](NOTICE) | GAMS contributors; [jsmn](https://github.com/zserge/jsmn) by Serge Zaitsev (Odin port in `src/jsmn/`); Odin/WASI runtime contributors |
 
-This policy supersedes historical approval-variable and pre-tag review/branch
-requirements below, not source provenance or legal terms. It does not claim hosted
-validation or authorize this editing session to commit, push, tag, or publish.
-No source snapshots, legal texts, or historical evidence are refreshed.
+The Odin jsmn port retains its upstream origin and original MIT terms. Raw WASM embeds complete LICENSE/NOTICE bytes as `gams.license` and `gams.notice`; preserve these when redistributing. Releases retain raw WASM on GitHub and `ghcr.io/kkgams/gams/respack:<numeric-version>`. Distribution versions do not change the WIT interface version.
 
-> Prepared target: `plugin.respack` v0.2.1; not yet published.
-> The documentation below is a frozen historical record, not current
-> pending approval requirements. Its manual approval/checksum and pre-tag
-> review/branch requirements are superseded above; content checks remain.
+## Development
 
-# plugin.respack
+Install Nix; run native commands with `nix develop --command make <target>`. The flake pins the actual Odin compiler, WASI SDK, binding tools and Rust. Cargo locks native Wasmtime tests; dependency-free Node runs only the pinned wiki engine.
 
-Standalone extraction of the GAMS resource-pack WebAssembly component. The Odin
-core, C component adapter, local Odin jsmn port, WIT dependencies, schema, and
-test fixture are included. It exports `gams:respack/respack@1.0.0`.
+| Command | Purpose |
+| --- | --- |
+| `make build` | Compile Odin core and C component into `build.nosync/`. |
+| `make package` | Build raw WASM, LICENSE, NOTICE and SHA256SUMS; unchanged output does no work. |
+| `make test` | Run native Cargo/Wasmtime decoder-generation, RSPK header/slot-count and invalid-schema assertions against the checked-in fixture and a separate test component. |
+| `make open` | Build and open local `gams.json` in the released macOS Apple Silicon Host. |
+| `make serve-docs` | Serve pinned wiki; independent `DOCS_PORT` defaults to 8080. |
+| `make docs` | Build documentation into `build.nosync/site/`. |
+| `make validate-docs` | Validate documentation. |
+| `make clean` | Remove known generated output/docs and marked downloads; preserve supplied tools/Units and unidentified legacy output. |
 
-## Build and verify
+Use `src/example.respack.json` with `src/testdata/example.slots.json` as schema/payload examples. Byte payloads use base64 strings. `generate-odin`, `build` and `build-to-file` return WIT result errors for invalid inputs; the latter returns the written byte count.
 
-```sh
-nix develop --command make test
-```
-
-The test checks Odin generation, invalid-schema diagnostics, and the binary RSPK
-header/content using the checked-in fixture. Output is `dist/plugin.respack.wasm`.
-The flake pins the same Odin revision as the standalone `plugin.director-compiler`.
-
-The owner approved Apache-2.0 for GAMS-authored code and reviewed the third-party
-`NOTICE`. The extracted Odin jsmn port now identifies its upstream MIT origin;
-hosted Linux adapter/candidate evidence is still required before tagging. See `LICENSING.md`, `THIRD-PARTY-REVIEW.md`, and
-`PUBLISHING.md` for the fail-closed candidate/release process.
-
-## Local Project and documentation
-
-Run `nix develop --command make open` on macOS Apple Silicon to build local
-artifacts and open this repository's `gams.json` with the downloaded released
-Host. No sibling checkout is required; `tools/` and `gams_modules/` are ignored.
-The existing Host is retained, with release notices kept alongside it.
-
-Use `make serve-docs` (`DOCS_PORT` overrides 8080), `make validate-docs` and
-`make docs` for the pinned wiki. The site is built into `build/site/`; pushes to
-`release` publish it through GitHub Pages, independently of version tags.
-See [development documentation](docs/index.md) for Project behavior and checks.
+The local Project loads the built component with pinned supporting Units and the released Files View, not a pack-editor UI. The Host downloads only when absent, retains its notices and is not updated implicitly. Native tests do not cover Host GUI interactions or `build-to-file` preopen integration.

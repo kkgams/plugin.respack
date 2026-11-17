@@ -17,10 +17,13 @@ ODIN_SOURCES := $(wildcard src/*.odin src/jsmn/*.odin)
 ODIN_DIRS := src src/jsmn
 WIT_SOURCES := $(shell find src/wit -type f -name '*.wit' | sort)
 WIT_DIRS := $(shell find src/wit -type d | sort)
+BUILD_CONFIG := Makefile flake.nix flake.lock
 
-.PHONY: build package test clean
+.PHONY: build package test clean compile_commands.json
 build: build.nosync/plugin.respack.wasm
 package: build.nosync/plugin.respack.wasm build.nosync/LICENSE build.nosync/NOTICE build.nosync/SHA256SUMS
+
+component_compile_flags = -I$(1)/bindings -O2 -DNDEBUG
 
 # Test compilation is independent from release packaging.
 define component_rules
@@ -31,11 +34,13 @@ $(1)/core.o.wasm: $(ODIN_SOURCES) $(ODIN_DIRS) Makefile flake.nix flake.lock | b
 	@if [ -f "$(1)/core.o.obj" ]; then mv "$(1)/core.o.obj" "$$@"; fi
 	@test -f "$$@"
 
-$(1)/plugin.respack.unstripped.wasm: src/component.c $(1)/core.o.wasm $(WIT_SOURCES) $(WIT_DIRS) Makefile flake.nix flake.lock | build.nosync/tmp
+$(1)/bindings/respack_plugin.h $(1)/bindings/respack_plugin.c $(1)/bindings/respack_plugin_component_type.o &: $(WIT_SOURCES) $(WIT_DIRS) $(BUILD_CONFIG) | build.nosync/tmp
 	@rm -rf "$(1)/bindings"
 	@mkdir -p "$(1)/bindings"
 	@(cd "$(1)/bindings" && $(WIT_BINDGEN) c "$(abspath src/wit)" -w gams:respack/respack-plugin@1.0.0)
-	@$(WASI_P2_CC) -o "$$@" -mexec-model=reactor -I"$(1)/bindings" -O2 -DNDEBUG \
+
+$(1)/plugin.respack.unstripped.wasm: src/component.c $(1)/core.o.wasm $(1)/bindings/respack_plugin.h $(1)/bindings/respack_plugin.c $(1)/bindings/respack_plugin_component_type.o $(BUILD_CONFIG)
+	@$(WASI_P2_CC) -o "$$@" -mexec-model=reactor $(call component_compile_flags,$(1)) \
 		"$(1)/bindings/respack_plugin.c" src/component.c "$(1)/core.o.wasm" \
 		"$(1)/bindings/respack_plugin_component_type.o" -Wl,--strip-all
 
@@ -47,6 +52,11 @@ $(1)/plugin.respack.wasm: $(1)/plugin.respack.stripped.wasm LICENSE NOTICE scrip
 endef
 $(eval $(call component_rules,build.nosync))
 $(eval $(call component_rules,build.nosync/test))
+
+compile_commands.json: build.nosync/compile_commands.json
+
+build.nosync/compile_commands.json: src/component.c build.nosync/bindings/respack_plugin.h build.nosync/bindings/respack_plugin.c scripts/compile-commands.py $(BUILD_CONFIG) | build.nosync/tmp
+	@$(PYTHON) scripts/compile-commands.py "$(WASI_P2_CC)" $(call component_compile_flags,build.nosync) -- src/component.c build.nosync/bindings/respack_plugin.c > "$@"
 
 build.nosync/tmp:
 	@mkdir -p "$@"

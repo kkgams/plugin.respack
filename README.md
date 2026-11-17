@@ -14,6 +14,7 @@ Install Nix; run native commands with `nix develop --command make <target>`. The
 
 | Command | Purpose |
 | --- | --- |
+| `make compile_commands.json` | Generate clangd metadata and required bindings under `build.nosync/`, without compiling the component; rerun with `make -B compile_commands.json` after compiler/environment overrides. |
 | `make build` | Compile Odin core and C component into `build.nosync/`. |
 | `make package` | Build raw WASM, LICENSE, NOTICE and SHA256SUMS; unchanged output does no work. |
 | `make test` | Run native Cargo/Wasmtime decoder-generation, RSPK header/slot-count and invalid-schema assertions against the checked-in fixture and a separate test component. |

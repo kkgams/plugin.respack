@@ -95,7 +95,6 @@ tools/gams.app:
 		test -f "$$stage/unpacked/GAMS.app/Contents/Info.plist"; \
 		test -x "$$stage/unpacked/GAMS.app/Contents/MacOS/gams"; \
 		mv "$$stage/unpacked/GAMS.app" "$$stage/GAMS.app"; \
-		printf 'plugin.respack Makefile Host download\n' > "$$stage/unpacked/.gams-managed"; \
 		mv "$$stage/unpacked" tools/gams-release-notices; \
 		mv "$$stage/GAMS.app" "$@"
 

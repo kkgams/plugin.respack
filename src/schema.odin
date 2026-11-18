@@ -508,7 +508,12 @@ compile_struct_type_from_slice :: proc(obj_slice: []u8, abs_start: int, type_idx
 		if field_count >= MAX_FIELDS {
 			return "field limit exceeded"
 		}
-		field, err := compile_field_from_slice(fields_slice, abs_start + fields_start, type_idx, member)
+		field, err := compile_field_from_slice(
+			fields_slice,
+			abs_start + fields_start,
+			type_idx,
+			member,
+		)
 		if err != "" {
 			return err
 		}
@@ -597,8 +602,14 @@ compile_field_from_slice :: proc(
 		}
 		field.type_index = anon_idx
 		field.max_len = read_optional_int_from_slice(value_slice, "max_len")
-		if default_start, default_end, has_default := find_top_level_value_bounds(value_slice, "default"); has_default {
-			default_token := find_token_by_value_start(schema_tokens[:schema_token_count], value_abs_start + default_start)
+		if default_start, default_end, has_default := find_top_level_value_bounds(
+			value_slice,
+			"default",
+		); has_default {
+			default_token := find_token_by_value_start(
+				schema_tokens[:schema_token_count],
+				value_abs_start + default_start,
+			)
 			field.has_default = true
 			field.default_token = default_token
 			field.default_start = value_abs_start + default_start
@@ -612,8 +623,14 @@ compile_field_from_slice :: proc(
 	}
 	field.type_index = type_idx
 	field.max_len = read_optional_int_from_slice(value_slice, "max_len")
-	if default_start, default_end, has_default := find_top_level_value_bounds(value_slice, "default"); has_default {
-		default_token := find_token_by_value_start(schema_tokens[:schema_token_count], value_abs_start + default_start)
+	if default_start, default_end, has_default := find_top_level_value_bounds(
+		value_slice,
+		"default",
+	); has_default {
+		default_token := find_token_by_value_start(
+			schema_tokens[:schema_token_count],
+			value_abs_start + default_start,
+		)
 		field.has_default = true
 		field.default_token = default_token
 		field.default_start = value_abs_start + default_start
@@ -1084,7 +1101,9 @@ compile_enum_type_from_slice :: proc(obj_slice: []u8, abs_start: int, type_idx: 
 			if enum_value_count >= MAX_ENUM_VALUES {
 				return "enum value limit exceeded"
 			}
-			v, ok := parse_i64_bytes(trim_bytes_space(value_slice[member.value_start:member.value_end]))
+			v, ok := parse_i64_bytes(
+				trim_bytes_space(value_slice[member.value_start:member.value_end]),
+			)
 			if !ok {
 				return "enum object values must be integers"
 			}
@@ -1144,7 +1163,9 @@ compile_enum_type :: proc(input: []u8, obj_idx: int, type_idx: int) -> string {
 			if enum_value_count >= MAX_ENUM_VALUES {
 				return "enum value limit exceeded"
 			}
-			v, ok := parse_i64_bytes(trim_bytes_space(input[schema_tokens[i + 1].start:schema_tokens[i + 1].end]))
+			v, ok := parse_i64_bytes(
+				trim_bytes_space(input[schema_tokens[i + 1].start:schema_tokens[i + 1].end]),
+			)
 			if !ok {
 				return "enum object values must be integers"
 			}
@@ -1356,7 +1377,9 @@ compile_field :: proc(input: []u8, name_tok: jsmn.Token, value_idx: int) -> (Fie
 		default_tok := schema_tokens[default_idx]
 		field.default_start = default_tok.start
 		field.default_end = default_tok.end
-		if default_tok.type == jsmn.JsmnType.String && default_tok.start > 0 && default_tok.end < len(input) {
+		if default_tok.type == jsmn.JsmnType.String &&
+		   default_tok.start > 0 &&
+		   default_tok.end < len(input) {
 			field.default_start = default_tok.start - 1
 			field.default_end = default_tok.end + 1
 		}
@@ -1569,8 +1592,21 @@ schema_type_error :: proc(type_idx: int, suffix: string, err: string) -> string 
 	return join3(join3("schema.types.", type_name_string(type_idx), suffix), ": ", err)
 }
 
-schema_field_error :: proc(parent_type_idx: int, field_name: string, suffix: string, err: string) -> string {
-	return join3(join3(join3("schema.types.", type_name_string(parent_type_idx), ".fields."), field_name, suffix), ": ", err)
+schema_field_error :: proc(
+	parent_type_idx: int,
+	field_name: string,
+	suffix: string,
+	err: string,
+) -> string {
+	return join3(
+		join3(
+			join3("schema.types.", type_name_string(parent_type_idx), ".fields."),
+			field_name,
+			suffix,
+		),
+		": ",
+		err,
+	)
 }
 
 enum_name_string :: proc(enum_idx: int) -> string {

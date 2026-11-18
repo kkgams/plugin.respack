@@ -4,8 +4,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-extern uint32_t respack_core_build(const uint8_t *schema_ptr, uintptr_t schema_len, const uint8_t *slots_ptr, uintptr_t slots_len);
-extern uint32_t respack_core_generate_odin(const uint8_t *schema_ptr, uintptr_t schema_len);
+extern uint32_t respack_core_build(const uint8_t *schema_ptr,
+                                   uintptr_t schema_len,
+                                   const uint8_t *slots_ptr,
+                                   uintptr_t slots_len);
+extern uint32_t respack_core_generate_odin(const uint8_t *schema_ptr,
+                                           uintptr_t schema_len);
 extern const uint8_t *respack_core_output_ptr(void);
 extern uintptr_t respack_core_output_len(void);
 
@@ -18,34 +22,54 @@ static void set_wasi_error(respack_plugin_string_t *err, const char *prefix,
   char buffer[96];
   const char *name = "unknown";
   switch (code) {
-  case WASI_FILESYSTEM_TYPES_ERROR_CODE_ACCESS: name = "access"; break;
-  case WASI_FILESYSTEM_TYPES_ERROR_CODE_NO_ENTRY: name = "no-entry"; break;
-  case WASI_FILESYSTEM_TYPES_ERROR_CODE_NOT_DIRECTORY: name = "not-directory"; break;
-  case WASI_FILESYSTEM_TYPES_ERROR_CODE_IS_DIRECTORY: name = "is-directory"; break;
-  case WASI_FILESYSTEM_TYPES_ERROR_CODE_NOT_PERMITTED: name = "not-permitted"; break;
-  case WASI_FILESYSTEM_TYPES_ERROR_CODE_READ_ONLY: name = "read-only"; break;
-  case WASI_FILESYSTEM_TYPES_ERROR_CODE_EXIST: name = "exist"; break;
-  case WASI_FILESYSTEM_TYPES_ERROR_CODE_IO: name = "io"; break;
-  default: break;
+  case WASI_FILESYSTEM_TYPES_ERROR_CODE_ACCESS:
+    name = "access";
+    break;
+  case WASI_FILESYSTEM_TYPES_ERROR_CODE_NO_ENTRY:
+    name = "no-entry";
+    break;
+  case WASI_FILESYSTEM_TYPES_ERROR_CODE_NOT_DIRECTORY:
+    name = "not-directory";
+    break;
+  case WASI_FILESYSTEM_TYPES_ERROR_CODE_IS_DIRECTORY:
+    name = "is-directory";
+    break;
+  case WASI_FILESYSTEM_TYPES_ERROR_CODE_NOT_PERMITTED:
+    name = "not-permitted";
+    break;
+  case WASI_FILESYSTEM_TYPES_ERROR_CODE_READ_ONLY:
+    name = "read-only";
+    break;
+  case WASI_FILESYSTEM_TYPES_ERROR_CODE_EXIST:
+    name = "exist";
+    break;
+  case WASI_FILESYSTEM_TYPES_ERROR_CODE_IO:
+    name = "io";
+    break;
+  default:
+    break;
   }
   size_t prefix_len = strlen(prefix);
   size_t name_len = strlen(name);
   size_t pos = 0;
-  if (prefix_len > sizeof(buffer) - 1) prefix_len = sizeof(buffer) - 1;
+  if (prefix_len > sizeof(buffer) - 1)
+    prefix_len = sizeof(buffer) - 1;
   memcpy(buffer + pos, prefix, prefix_len);
   pos += prefix_len;
   if (pos + 2 < sizeof(buffer)) {
     buffer[pos++] = ':';
     buffer[pos++] = ' ';
   }
-  if (name_len > sizeof(buffer) - 1 - pos) name_len = sizeof(buffer) - 1 - pos;
+  if (name_len > sizeof(buffer) - 1 - pos)
+    name_len = sizeof(buffer) - 1 - pos;
   memcpy(buffer + pos, name, name_len);
   pos += name_len;
   buffer[pos] = '\0';
   set_error(err, buffer);
 }
 
-static bool string_eq_bytes(const uint8_t *ptr, size_t len, const char *literal) {
+static bool string_eq_bytes(const uint8_t *ptr, size_t len,
+                            const char *literal) {
   size_t literal_len = strlen(literal);
   return len == literal_len && memcmp(ptr, literal, len) == 0;
 }
@@ -54,7 +78,8 @@ static bool preopen_matches_path(const respack_plugin_string_t *preopen_path,
                                  const respack_plugin_string_t *path,
                                  size_t *relative_offset) {
   if (string_eq_bytes(preopen_path->ptr, preopen_path->len, "/")) {
-    if (path->len == 0 || path->ptr[0] != '/') return false;
+    if (path->len == 0 || path->ptr[0] != '/')
+      return false;
     *relative_offset = 1;
     return true;
   }
@@ -66,7 +91,8 @@ static bool preopen_matches_path(const respack_plugin_string_t *preopen_path,
     *relative_offset = path->len;
     return true;
   }
-  if (path->ptr[preopen_path->len] != '/') return false;
+  if (path->ptr[preopen_path->len] != '/')
+    return false;
   *relative_offset = preopen_path->len + 1;
   return true;
 }
@@ -75,8 +101,7 @@ static bool resolve_wasi_path(
     respack_plugin_string_t *path,
     wasi_filesystem_preopens_list_tuple2_own_descriptor_string_t *preopens,
     wasi_filesystem_types_borrow_descriptor_t *ret_base,
-    respack_plugin_string_t *ret_relative,
-    respack_plugin_string_t *err) {
+    respack_plugin_string_t *ret_relative, respack_plugin_string_t *err) {
   wasi_filesystem_preopens_get_directories(preopens);
   if (preopens->len == 0) {
     set_error(err, "no wasi filesystem preopens");
@@ -102,7 +127,8 @@ static bool resolve_wasi_path(
       continue;
     }
     size_t candidate_offset = 0;
-    if (!preopen_matches_path(guest, path, &candidate_offset)) continue;
+    if (!preopen_matches_path(guest, path, &candidate_offset))
+      continue;
     if (!found || guest->len > best_len) {
       found = true;
       index = i;
@@ -125,7 +151,8 @@ static bool resolve_wasi_path(
 
   if (!found || path->len <= offset) {
     wasi_filesystem_preopens_list_tuple2_own_descriptor_string_free(preopens);
-    set_error(err, found ? "invalid respack output path" : "respack output path is not under a WASI preopen");
+    set_error(err, found ? "invalid respack output path"
+                         : "respack output path is not under a WASI preopen");
     return false;
   }
 
@@ -140,37 +167,43 @@ static bool write_all_bytes(respack_plugin_string_t *path, const uint8_t *data,
   wasi_filesystem_preopens_list_tuple2_own_descriptor_string_t preopens;
   wasi_filesystem_types_borrow_descriptor_t base;
   respack_plugin_string_t relative;
-  if (!resolve_wasi_path(path, &preopens, &base, &relative, err)) return false;
+  if (!resolve_wasi_path(path, &preopens, &base, &relative, err))
+    return false;
 
   wasi_filesystem_types_own_descriptor_t file;
   wasi_filesystem_types_error_code_t code = 0;
   if (!wasi_filesystem_types_method_descriptor_open_at(
           base, 0, &relative,
-          WASI_FILESYSTEM_TYPES_OPEN_FLAGS_CREATE | WASI_FILESYSTEM_TYPES_OPEN_FLAGS_TRUNCATE,
+          WASI_FILESYSTEM_TYPES_OPEN_FLAGS_CREATE |
+              WASI_FILESYSTEM_TYPES_OPEN_FLAGS_TRUNCATE,
           WASI_FILESYSTEM_TYPES_DESCRIPTOR_FLAGS_WRITE, &file, &code)) {
     wasi_filesystem_preopens_list_tuple2_own_descriptor_string_free(&preopens);
     set_wasi_error(err, "failed to open respack output file", code);
     return false;
   }
 
-  wasi_filesystem_types_borrow_descriptor_t borrowed = wasi_filesystem_types_borrow_descriptor(file);
+  wasi_filesystem_types_borrow_descriptor_t borrowed =
+      wasi_filesystem_types_borrow_descriptor(file);
   size_t offset = 0;
   while (offset < len) {
     respack_plugin_list_u8_t chunk = {
-      .ptr = (uint8_t *)data + offset,
-      .len = len - offset,
+        .ptr = (uint8_t *)data + offset,
+        .len = len - offset,
     };
     wasi_filesystem_types_filesize_t written = 0;
     code = 0;
-    if (!wasi_filesystem_types_method_descriptor_write(borrowed, &chunk, offset, &written, &code)) {
+    if (!wasi_filesystem_types_method_descriptor_write(borrowed, &chunk, offset,
+                                                       &written, &code)) {
       wasi_filesystem_types_descriptor_drop_own(file);
-      wasi_filesystem_preopens_list_tuple2_own_descriptor_string_free(&preopens);
+      wasi_filesystem_preopens_list_tuple2_own_descriptor_string_free(
+          &preopens);
       set_wasi_error(err, "failed to write respack output file", code);
       return false;
     }
     if (written == 0) {
       wasi_filesystem_types_descriptor_drop_own(file);
-      wasi_filesystem_preopens_list_tuple2_own_descriptor_string_free(&preopens);
+      wasi_filesystem_preopens_list_tuple2_own_descriptor_string_free(
+          &preopens);
       set_error(err, "respack output write returned zero bytes");
       return false;
     }
@@ -208,8 +241,11 @@ static void set_list_from_core(respack_plugin_list_u8_t *ret) {
   memcpy(ret->ptr, ptr, (size_t)len);
 }
 
-bool exports_gams_respack_respack_generate_odin(respack_plugin_string_t *schema, respack_plugin_string_t *ret, respack_plugin_string_t *err) {
-  uint32_t status = respack_core_generate_odin(schema->ptr, (uintptr_t)schema->len);
+bool exports_gams_respack_respack_generate_odin(respack_plugin_string_t *schema,
+                                                respack_plugin_string_t *ret,
+                                                respack_plugin_string_t *err) {
+  uint32_t status =
+      respack_core_generate_odin(schema->ptr, (uintptr_t)schema->len);
   if (status != 0) {
     set_string_from_core(err);
     return false;
@@ -218,8 +254,13 @@ bool exports_gams_respack_respack_generate_odin(respack_plugin_string_t *schema,
   return true;
 }
 
-bool exports_gams_respack_respack_build(respack_plugin_string_t *schema, respack_plugin_string_t *slots_json, respack_plugin_list_u8_t *ret, respack_plugin_string_t *err) {
-  uint32_t status = respack_core_build(schema->ptr, (uintptr_t)schema->len, slots_json->ptr, (uintptr_t)slots_json->len);
+bool exports_gams_respack_respack_build(respack_plugin_string_t *schema,
+                                        respack_plugin_string_t *slots_json,
+                                        respack_plugin_list_u8_t *ret,
+                                        respack_plugin_string_t *err) {
+  uint32_t status =
+      respack_core_build(schema->ptr, (uintptr_t)schema->len, slots_json->ptr,
+                         (uintptr_t)slots_json->len);
   if (status != 0) {
     set_string_from_core(err);
     return false;
@@ -228,8 +269,13 @@ bool exports_gams_respack_respack_build(respack_plugin_string_t *schema, respack
   return true;
 }
 
-bool exports_gams_respack_respack_build_to_file(respack_plugin_string_t *schema, respack_plugin_string_t *slots_json, respack_plugin_string_t *path, uint64_t *ret, respack_plugin_string_t *err) {
-  uint32_t status = respack_core_build(schema->ptr, (uintptr_t)schema->len, slots_json->ptr, (uintptr_t)slots_json->len);
+bool exports_gams_respack_respack_build_to_file(
+    respack_plugin_string_t *schema, respack_plugin_string_t *slots_json,
+    respack_plugin_string_t *path, uint64_t *ret,
+    respack_plugin_string_t *err) {
+  uint32_t status =
+      respack_core_build(schema->ptr, (uintptr_t)schema->len, slots_json->ptr,
+                         (uintptr_t)slots_json->len);
   if (status != 0) {
     set_string_from_core(err);
     return false;

@@ -53,7 +53,11 @@ validate_odin_identifiers :: proc() -> string {
 			}
 			right := identifier_ada(type_name_string(j))
 			if left == right {
-				return join3("generated Odin type name collision: ", type_name_string(i), join2(" and ", type_name_string(j)))
+				return join3(
+					"generated Odin type name collision: ",
+					type_name_string(i),
+					join2(" and ", type_name_string(j)),
+				)
 			}
 		}
 	}
@@ -71,7 +75,15 @@ validate_odin_identifiers :: proc() -> string {
 					field_b := type_def.field_start + b
 					right := identifier_snake(field_name_string(field_b))
 					if left == right {
-						return join3("generated Odin field name collision in ", type_name_string(i), join3(": ", field_name_string(field_a), join2(" and ", field_name_string(field_b))))
+						return join3(
+							"generated Odin field name collision in ",
+							type_name_string(i),
+							join3(
+								": ",
+								field_name_string(field_a),
+								join2(" and ", field_name_string(field_b)),
+							),
+						)
 					}
 				}
 			}
@@ -83,7 +95,15 @@ validate_odin_identifiers :: proc() -> string {
 					enum_b := type_def.enum_start + b
 					right := identifier_ada(enum_name_string(enum_b))
 					if left == right {
-						return join3("generated Odin enum value collision in ", type_name_string(i), join3(": ", enum_name_string(enum_a), join2(" and ", enum_name_string(enum_b))))
+						return join3(
+							"generated Odin enum value collision in ",
+							type_name_string(i),
+							join3(
+								": ",
+								enum_name_string(enum_a),
+								join2(" and ", enum_name_string(enum_b)),
+							),
+						)
 					}
 				}
 			}
@@ -97,7 +117,15 @@ validate_odin_identifiers :: proc() -> string {
 					right_kind := identifier_ada(type_name_string(option_b))
 					right_field := identifier_snake(type_name_string(option_b))
 					if left_kind == right_kind || left_field == right_field {
-						return join3("generated Odin oneof option collision in ", type_name_string(i), join3(": ", type_name_string(option_a), join2(" and ", type_name_string(option_b))))
+						return join3(
+							"generated Odin oneof option collision in ",
+							type_name_string(i),
+							join3(
+								": ",
+								type_name_string(option_a),
+								join2(" and ", type_name_string(option_b)),
+							),
+						)
 					}
 				}
 			}
